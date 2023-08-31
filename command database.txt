@@ -1,0 +1,57 @@
+2. Create User
+------------------
+CONNECT sys/password as SYSDBA
+
+CREATE USER panachat IDENTIFIED BY 64107899;
+
+GRANT CONNECT,RESOURCE TO panachat;
+
+-------------------
+
+ออกจาก SYS
+3. SQL> disconnect
+
+4. SQL> connect
+
+5. SQL> SHOW USER 
+ผลลัพธ์ USER is "PANACHAT"
+
+
+
+
+Create Table
+------------------
+1.SQL> create table member(
+  2  mbno NUMBER(4) PRIMARY KEY, 
+  3  mbname VARCHAR2(20) NOT NULL
+  4  );
+
+
+2.SQL> create table employee(
+  2  empno number(4) primary key,
+  3  empname varchar2(20) Not Null,
+  4  hiredate date,
+  5  salary number(10,2),
+  6  position varchar2(25) Not Null,
+  7  mgrno number(4)
+  8  );
+
+3.SQL> create table book(
+  2  bookno number(2) PRIMARY KEY,
+  3  bookname VARCHAR2(20) Not Null,
+  4  btype VARCHAR2(15) Not Null,
+  5  price NUMBER(5)
+  6  );
+
+4. create table borrow(
+  2  borrowno NUMBER(5) PRIMARY KEY,
+  3  mbno NUMBER(4) CONSTRAINT br_mbno_fk REFERENCES member (mbno),
+  4  bookno NUMBER(2) CONSTRAINT br_bookno_fk REFERENCES book (bookno),
+  5  startdate DATE,
+  6  enddate DATE,
+  7  empno NUMBER(4) CONSTRAINT br_empno_fk REFERENCES employee (empno)
+  8  );
+
+
+SQL> select constraint_name, constraint_type, search_condition
+from user_constraints where table_name = 'borrow';

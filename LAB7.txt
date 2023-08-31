@@ -1,0 +1,87 @@
+1.ต่างกันตรงที่ถ้าใช้ group by มันจะจำแนกตามกลุ่มที่เราได้ group by
+ถ้าไม่ได้ใช้ group by จะเลือกทั้งหมด
+
+
+2.
+            
+SQL> select COUNT(mgrno) from employee;
+
+COUNT(MGRNO)
+------------
+           5
+
+SQL> select COUNT(*) from employee;
+
+  COUNT(*)
+----------
+         6
+
+COUNT(*) คือการนับทั้งหมดใน employee
+COUNT(mgrno) คือการนับเฉพาะ mgrno
+
+
+
+3.
+  select position, count(empno) from employee group by position;
+
+POSITION                  COUNT(EMPNO)
+------------------------- ------------
+director                             1
+senopr librarian                     1
+clerk                                2
+librarian                            2
+
+
+
+4.
+SQL> SELECT btype, COUNT(*), SUM(price)
+  2  FROM book
+  3  WHERE bookname <> 'data minning'
+  4  GROUP BY btype;
+
+
+
+5.
+SELECT btype, COUNT(*) as num_books
+FROM book
+GROUP BY btype
+HAVING COUNT(*) >= 3;
+
+
+BTYPE             COUNT(*)
+--------------- ----------
+computer                 3
+
+
+
+
+
+
+6.
+SQL> select employee.empname, COUNT(*)
+  2  from employee
+  3  inner join borrow
+  4  on employee.empno = borrow.empno
+  5  group by employee.empname;
+
+EMPNAME                COUNT(*)
+-------------------- ----------
+wichai                        3
+thidarat                      1
+ternjai                       1
+
+
+
+
+7.
+SQL> select member.mbname, COUNT(*)
+  2  from member
+  3  inner join borrow
+  4  on member.mbno = borrow.mbno
+  5  group by member.mbname;
+
+MBNAME                 COUNT(*)
+-------------------- ----------
+siriwan                       2
+jintana                       2
+amporn                        1

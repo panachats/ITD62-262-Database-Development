@@ -1,0 +1,29 @@
+1.
+ insert into book
+  2  values (16, 'python', 'computer', 300);
+
+
+	
+2.
+insert into employee
+  2  values (9007, 'panachat', to_date('29/11/2002','DD/MM/YYYY'),5000,'student',9002);
+
+
+3.
+update employee
+  2  set salary = salary * 0.1 + salary
+  3  where salary <= 25000;
+
+
+4.
+update book
+  2  set price = price * 0.05 + price;
+
+
+5.
+DELETE FROM borrow; ทำงานได้ ผลที่ได้ : ทำการลบข้อมูลของตาราง borrow
+ถ้าต้องการยกเลิก : Rollback;
+
+
+DELETE FROM borrow; จะลบข้อมูลของตาราง borrow ทั้งหมด
+DELETE FROM borrow  WHERE bookno = 10; จะลบข้อมูลในตาราง borrow ที่มี bookno = 10

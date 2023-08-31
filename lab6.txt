@@ -1,0 +1,145 @@
+SQL> select book.bookno, book.bookname, borrow.startdate, borrow.enddate, borrow.mbno
+  2  from book LEFT JOIN borrow
+  3  ON (book.bookno = borrow.bookno)
+  4  order by book.bookno;
+
+    BOOKNO BOOKNAME             STARTDATE ENDDATE         MBNO
+---------- -------------------- --------- --------- ----------
+        10 c programming        15-JAN-20 25-JAN-20       1001
+        11 data minning         17-MAY-20 27-MAY-20       1001
+        12 calculus             18-FEB-20 28-FEB-20       1002
+        13 cost accounting      21-JUL-20 31-JUL-20       1004
+        14 harry potter
+        15 oracle database      01-JUN-20 11-JUN-20       1002
+
+
+
+
+SQL> SELECT worker.empno, worker.empname, worker.salary || ' work for ' || manager.empname, manager.salary
+  2  FROM employee worker
+  3  INNER JOIN employee manager ON worker.mgrno = manager.empno
+  4  WHERE worker.position = 'clerk';
+
+EMPNO EMPNAME              WORKER.SALARY||'WORKFOR'||MANAGER.EMPNAME                                  SALARY
+---------- -------------------- ---------------------------------------------------------------------- ----------
+      9003 tawatchai            12000 work for tanachote                                                    26000
+      9005 thidarat             9500 work for tanachote                                                     26000
+
+
+
+
+SQL> select book.bookno, book.bookname, member.mbname, borrow.startdate, borrow.enddate
+  2  from book join borrow
+  3  on book.bookno = borrow.bookno
+  4  join member on borrow.mbno = member.mbno;
+
+    BOOKNO BOOKNAME             MBNAME               STARTDATE ENDDATE
+---------- -------------------- -------------------- --------- ---------
+        10 c programming        siriwan              15-JAN-20 25-JAN-20
+        11 data minning         siriwan              17-MAY-20 27-MAY-20
+        12 calculus             jintana              18-FEB-20 28-FEB-20
+        15 oracle database      jintana              01-JUN-20 11-JUN-20
+        13 cost accounting      amporn               21-JUL-20 31-JUL-20
+
+
+
+
+
+SQL> select emp.empno, emp.empname, emp.position
+  2  from employee emp
+  3  inner join employee manager on emp.mgrno = manager.empno
+  4  and emp.hiredate > manager.hiredate
+  5  order by emp.hiredate;
+
+     EMPNO EMPNAME              POSITION
+---------- -------------------- -------------------------
+      9002 tanachote            senopr librarian
+      9003 tawatchai            clerk
+      9004 wichai               librarian
+      9006 ternjai              librarian
+      9005 thidarat             clerk
+
+
+
+ select emp.empno, emp.empname, ROUND(months_between(sysdate, emp.hiredate)) AS months_worked
+  2  from employee emp;
+
+     EMPNO EMPNAME              MONTHS_WORKED
+---------- -------------------- -------------
+      9001 benjawan                       159
+      9002 tanachote                      159
+      9003 tawatchai                      155
+      9004 wichai                         151
+      9005 thidarat                       145
+      9006 ternjai                        145
+
+
+
+
+
+SQL> select emp.empno, emp.empname, TO_CHAR(hiredate,'MM/DD/YYYY') AS hiredate, TO_CHAR(salary,'$999,999.00') AS salary
+  2  from employee emp;
+
+     EMPNO EMPNAME              HIREDATE   SALARY
+---------- -------------------- ---------- ------------
+      9001 benjawan             11/06/2009   $85,000.00
+      9002 tanachote            11/14/2009   $26,000.00
+      9003 tawatchai            03/03/2010   $12,000.00
+      9004 wichai               07/25/2010   $40,000.00
+      9005 thidarat             02/01/2011    $9,500.00
+      9006 ternjai              01/19/2011   $25,000.00
+
+
+
+
+
+SQL> select member.mbname, book.bookno, book.bookname, borrow.startdate, borrow.enddate
+  2  from book inner join borrow
+  3  on book.bookno = borrow.bookno
+  4  inner join member on borrow.mbno = member.mbno;
+
+MBNAME               BOOKNAME             STARTDATE ENDDATE
+-------------------- -------------------- --------- ---------
+siriwan              c programming        15-JAN-20 25-JAN-20
+siriwan              data minning         17-MAY-20 27-MAY-20
+jintana              calculus             18-FEB-20 28-FEB-20
+jintana              oracle database      01-JUN-20 11-JUN-20
+amporn               cost accounting      21-JUL-20 31-JUL-20
+
+
+
+
+SQL> select book.bookno, book.bookname, member.mbname, borrow.startdate, borrow.enddate, employee.empname
+  2  from book inner join borrow
+  3  on book.bookno = borrow.bookno
+  4  inner join member on borrow.mbno = member.mbno
+  5  inner join employee on borrow.empno = employee.empno;
+
+    BOOKNO BOOKNAME             MBNAME               STARTDATE ENDDATE   EMPNAME
+---------- -------------------- -------------------- --------- --------- --------------------
+        10 c programming        siriwan              15-JAN-20 25-JAN-20 wichai
+        11 data minning         siriwan              17-MAY-20 27-MAY-20 wichai
+        13 cost accounting      amporn               21-JUL-20 31-JUL-20 wichai
+        15 oracle database      jintana              01-JUN-20 11-JUN-20 thidarat
+        12 calculus             jintana              18-FEB-20 28-FEB-20 ternjai
+
+
+
+
+
+
+SQL> select member.mbno||'-'||member.mbname AS "MEMBER NAME", book.bookname AS "BOOK NAME", book.btype AS "BOOK TYPE"
+  2  from member inner join borrow
+  3  on member.mbno = borrow.mbno
+  4  inner join book on borrow.bookno = book.bookno;
+
+MEMBER NAME                                                   BOOK NAME            BOOK TYPE
+------------------------------------------------------------- -------------------- ---------------
+1001-siriwan                                                  c programming        computer
+1001-siriwan                                                  data minning         computer
+1002-jintana                                                  calculus             math
+1004-amporn                                                   cost accounting      business
+1002-jintana                                                  oracle database      computer
+
+
+

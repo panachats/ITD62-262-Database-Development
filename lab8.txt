@@ -1,0 +1,88 @@
+1.
+SQL> select rownum as rank, price
+  2  from (select price from book
+  3  order by price ASC)
+  4  where rownum <= 4;
+
+      RANK      PRICE
+---------- ----------
+         1        190
+         2        220
+         3        250
+         4        280
+
+
+
+
+
+
+
+2.
+SQL> select empname, position, salary, hiredate
+  2  from employee
+  3  where salary > ALL (select salary from employee where position = 'clerk')
+  4  and position <> 'clerk';
+
+EMPNAME              POSITION                      SALARY HIREDATE
+-------------------- ------------------------- ---------- ---------
+ternjai              librarian                      25000 19-JAN-11
+tanachote            senopr librarian               26000 14-NOV-09
+wichai               librarian                      40000 25-JUL-10
+benjawan             director                       85000 06-NOV-09
+
+
+
+3.
+SQL> SELECT *
+  2  FROM employee
+  3  WHERE salary > (SELECT AVG(salary) FROM employee)
+  4  ORDER BY salary DESC;
+
+     EMPNO EMPNAME              HIREDATE      SALARY POSITION                       MGRNO
+---------- -------------------- --------- ---------- ------------------------- ----------
+      9001 benjawan             06-NOV-09      85000 director
+      9004 wichai               25-JUL-10      40000 librarian                       9002
+
+
+4.
+SQL> select empname, salary
+  2  from employee
+  3  where position <> ALL (select position from employee where position = 'clerk');
+
+EMPNAME                  SALARY
+-------------------- ----------
+benjawan                  85000
+wichai                    40000
+ternjai                   25000
+tanachote                 26000
+
+
+
+5.
+SQL> select member.mbno, member.mbname
+  2  from member
+  3  inner join borrow on member.mbno = borrow.mbno
+  4  inner join employee on borrow.empno = employee.empno
+  5  where employee.salary > ALL (select AVG(salary) from employee where position <> 'director');
+
+      MBNO MBNAME
+---------- --------------------
+      1001 siriwan
+      1001 siriwan
+      1002 jintana
+      1004 amporn
+
+
+
+6.
+SQL> select rownum as rank, empno, empname
+  2  from
+  3  (select * from employee order by salary ASC)
+  4  where rownum <= 3;
+
+      RANK      EMPNO EMPNAME
+---------- ---------- --------------------
+         1       9005 thidarat
+         2       9003 tawatchai
+         3       9006 ternjai
+

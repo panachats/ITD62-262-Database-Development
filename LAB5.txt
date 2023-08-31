@@ -1,0 +1,116 @@
+SQL> select bookname, price
+  2  from book
+  3  where btype='computer';
+
+BOOKNAME                  PRICE
+-------------------- ----------
+c programming               250
+data minning                280
+oracle database             345
+
+
+
+SQL> select salary
+  2  from employee
+  3  where position='librarian'
+  4  or position='senopr librarian';
+
+    SALARY
+----------
+     26000
+     40000
+     25000
+
+
+
+
+
+SQL> select salary
+  2  from employee
+  3  where position not in ('director');
+
+    SALARY
+----------
+     26000
+     12000
+     40000
+      9500
+     25000
+
+
+
+
+SQL> select empname, salary, position, hiredate
+  2  from employee
+  3  order by hiredate;
+
+EMPNAME                  SALARY POSITION                  HIREDATE
+-------------------- ---------- ------------------------- ---------
+benjawan                  85000 director                  06-NOV-09
+tanachote                 26000 senopr librarian          14-NOV-09
+tawatchai                 12000 clerk                     03-MAR-10
+wichai                    40000 librarian                 25-JUL-10
+ternjai                   25000 librarian                 19-JAN-11
+thidarat                   9500 clerk                     01-FEB-11
+
+6 rows selected.
+
+
+
+
+
+SQL> select *
+  2  from employee
+  3  where mgrno is null;
+
+     EMPNO EMPNAME              HIREDATE      SALARY POSITION
+---------- -------------------- --------- ---------- -------------------------
+     MGRNO
+----------
+      9001 benjawan             06-NOV-09      85000 director
+
+
+
+
+
+SQL> select *
+  2  from employee
+  3  where position not in ('librarian');
+
+     EMPNO EMPNAME              HIREDATE      SALARY POSITION
+---------- -------------------- --------- ---------- -------------------------
+     MGRNO
+----------
+      9001 benjawan             06-NOV-09      85000 director
+
+
+      9002 tanachote            14-NOV-09      26000 senopr librarian
+      9001
+
+      9003 tawatchai            03-MAR-10      12000 clerk
+      9002
+
+
+     EMPNO EMPNAME              HIREDATE      SALARY POSITION
+---------- -------------------- --------- ---------- -------------------------
+     MGRNO
+----------
+      9005 thidarat             01-FEB-11       9500 clerk
+      9002
+
+
+
+
+SQL> select *
+  2  from employee
+  3  where empname like '%chai';
+
+     EMPNO EMPNAME              HIREDATE      SALARY POSITION
+---------- -------------------- --------- ---------- -------------------------
+     MGRNO
+----------
+      9003 tawatchai            03-MAR-10      12000 clerk
+      9002
+
+      9004 wichai               25-JUL-10      40000 librarian
+      9002
